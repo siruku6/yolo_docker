@@ -1,0 +1,14 @@
+jupyter
+
+matplotlib
+numpy==1.22.3
+pandas>=1.2.0
+# pytorch-lightning==1.6.1
+
+# # --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+# --find-links https://download.pytorch.org/whl/cu113
+# torch==1.12.1
+# torchinfo==1.7.0
+# torchmetrics==0.8.0; python_version >= '3.6'
+# torchvision==0.13.1
+tqdm==4.64.0

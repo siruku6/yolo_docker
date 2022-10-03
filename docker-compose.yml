@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  python:
+    container_name: python
+    build:
+      context: ./docker/python
+    ports:
+      - 8887:8888
+    working_dir: /opt/workspace
+    volumes:
+      - ./docker/python:/opt
+    command: >
+      bash -c "jupyter notebook --no-browser --ip=0.0.0.0 --allow-root --NotebookApp.token='demo'"
