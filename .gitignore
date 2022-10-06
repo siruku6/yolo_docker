@@ -1,1 +1,4 @@
-docker/python/workspace
+*.ipynb_checkpoints
+
+docker/python/workspace/*
+!docker/python/workspace/notebooks

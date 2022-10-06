@@ -10,6 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     # # To avoid `Problem with the SSL CA cert (path? access rights?)` on git clone
     # ca-certificates \
     curl \
+    wget \
     git \
     vim \
     # for opencv
