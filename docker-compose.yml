@@ -6,8 +6,10 @@ services:
       context: ./docker/python
     ports:
       - 8887:8888
-    working_dir: /opt/workspace
+    # shm_size: https://qiita.com/gorogoroyasu/items/e71dd3c076af145c9b44
+    shm_size: '2gb'
     volumes:
       - ./docker/python:/opt
+    working_dir: /opt/workspace
     command: >
       bash -c "jupyter notebook --no-browser --ip=0.0.0.0 --allow-root --NotebookApp.token='demo'"
