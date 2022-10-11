@@ -1,0 +1,110 @@
+diff --git a/xml2yolo.py b/xml2yolo.py
+index e4d7a09..ad66875 100644
+--- a/xml2yolo.py
++++ b/xml2yolo.py
+@@ -1,13 +1,14 @@
+-#!/usr/bin/env python
+-# -*- coding: utf8 -*-
+ import os
+-import sys
+-from xml.etree import ElementTree
+-from xml.etree.ElementTree import Element, SubElement
+-from lxml import etree
+-import codecs
+-import cv2
++# import sys
+ from glob import glob
++from xml.etree import ElementTree
++
++# import codecs
++import cv2
++from lxml import etree
++
++# from xml.etree.ElementTree import Element, SubElement
++
+ 
+ XML_EXT = '.xml'
+ ENCODE_METHOD = 'utf-8'
+@@ -19,19 +20,19 @@ class PascalVocReader:
+         self.shapes = []
+         self.filepath = filepath
+         self.verified = False
+-        try:
+-            self.parseXML()
+-        except:
+-            pass
++        # try:
++        self.parseXML()
++        # except:
++        #     pass
+ 
+     def getShapes(self):
+         return self.shapes
+ 
+     def addShape(self, label, bndbox, filename, difficult):
+-        xmin = int(bndbox.find('xmin').text)
+-        ymin = int(bndbox.find('ymin').text)
+-        xmax = int(bndbox.find('xmax').text)
+-        ymax = int(bndbox.find('ymax').text)
++        xmin = int(float(bndbox.find('xmin').text))
++        ymin = int(float(bndbox.find('ymin').text))
++        xmax = int(float(bndbox.find('xmax').text))
++        ymax = int(float(bndbox.find('ymax').text))
+         points = [(xmin, ymin), (xmax, ymin), (xmax, ymax), (xmin, ymax)]
+         self.shapes.append((label, points, filename, difficult))
+ 
+@@ -39,14 +40,19 @@ class PascalVocReader:
+         assert self.filepath.endswith(XML_EXT), "Unsupport file format"
+         parser = etree.XMLParser(encoding=ENCODE_METHOD)
+         xmltree = ElementTree.parse(self.filepath, parser=parser).getroot()
+-        filename = xmltree.find('filename').text
+-        path = xmltree.find('path').text
+-        try:
+-            verified = xmltree.attrib['verified']
+-            if verified == 'yes':
+-                self.verified = True
+-        except KeyError:
+-            self.verified = False
++        path = xmltree.find('filename').text
++        # path = xmltree.find('path').text
++
++        self.verified = True
++
++        # try:
++        #     verified = xmltree.attrib['verified']
++        #     # print('verified:', verified, '[', path ,']')
++        #     if verified == 'yes':
++        #         self.verified = True
++        # except KeyError:
++        #     # print('Key error: ', path)
++        #     self.verified = False
+ 
+         for object_iter in xmltree.findall('object'):
+             bndbox = object_iter.find("bndbox")
+@@ -69,12 +75,12 @@ except NameError:
+     pass
+ 
+ 
+-parentpath = './' #"Directory path with parent dir before xml_dir or img_dir"
+-addxmlpath = parentpath + 'traffic_label/201702071403' #"Directory path with XML files"
+-addimgpath = parentpath + 'traffic_img/201702071403' #"Directory path with IMG files"
+-outputpath = parentpath + 'traffic_format4yolo' #"output folder for yolo format"
+-classes_txt = './traffic_classes.txt' #"File containing classes"
+-ext = '.png' #"Image file extension [.jpg or .png]"
++parentpath = "../VOCdevkit/VOC2008/" #"Directory path with parent dir before xml_dir or img_dir"
++addxmlpath = parentpath + 'Annotations' #"Directory path with XML files"
++addimgpath = parentpath + 'JPEGImages' #"Directory path with IMG files"
++outputpath = '../tr_data/format4yolo' #"output folder for yolo format"
++classes_txt = './voc2018_classes.txt' #"File containing classes"
++ext = '.jpg' #"Image file extension [.jpg or .png]"
+ 
+ 
+ if os.path.isfile(classes_txt):
+@@ -85,6 +91,7 @@ if os.path.isfile(classes_txt):
+ xmlPaths = glob(addxmlpath + "/*.xml")
+ #imgPaths = glob(addimgpath + "/*"+ext)
+ 
++
+ for xmlPath in xmlPaths:
+     tVocParseReader = PascalVocReader(xmlPath)
+     shapes = tVocParseReader.getShapes()

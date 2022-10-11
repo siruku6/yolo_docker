@@ -2,3 +2,4 @@
 
 docker/python/workspace/*
 !docker/python/workspace/notebooks
+!docker/python/workspace/xml2yolo.py.patch
