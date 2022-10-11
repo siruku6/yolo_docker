@@ -52,6 +52,6 @@ copy_files(val_filenames, origin_dir, target_dir=MV_TARGET_PARENT_DIR + "/images
 train_annotation_filenames: List[str] = extract_filenames(target_file_name=TRAIN_FILENAME_LIST_FILE, ext='.txt')
 val_annotation_filenames: List[str] = extract_filenames(target_file_name=VALIDATION_FILENAME_LIST_FILE, ext='.txt')
 
-origin_dir: str = os.path.join("../tr_data", "format4yolo")
+origin_dir: str = os.path.join(MV_TARGET_PARENT_DIR, "format4yolo")
 copy_files(train_annotation_filenames, origin_dir, target_dir=MV_TARGET_PARENT_DIR + "/labels/train")
 copy_files(val_annotation_filenames, origin_dir, target_dir=MV_TARGET_PARENT_DIR + "/labels/val")
